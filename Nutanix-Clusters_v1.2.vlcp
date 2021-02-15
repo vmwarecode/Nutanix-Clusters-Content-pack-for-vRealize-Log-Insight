@@ -1,0 +1,560 @@
+{
+  "name":"Nutanix - Clusters",
+  "namespace":"com.nutanix.clusters",
+  "framework":"#9c4",
+  "version":"2.4",
+  "contentPackId":"com.nutanix.clusters",
+  "extractedFields":[ {
+    "displayName":"nutanix_cassandra_event_severity",
+    "preContext":"cassandra: ",
+    "postContext":" \\d\\d",
+    "regexValue":"\\w+",
+    "internalName":"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000",
+    "constraints":"{\"filters\":[{\"internalName\":\"product\",\"displayName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\",\"fieldType\":\"STRING\",\"isExtracted\":false,\"hidden\":false}],\"searchTerms\":\"cassandra\"}",
+    "info":null
+  }, {
+    "displayName":"nutanix_curator_remote_server_ip_address",
+    "preContext":"server ",
+    "postContext":":",
+    "regexValue":"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}",
+    "internalName":"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3vojqxi33sl5zgk3lporsv643foj3gk4s7nfyf6ylemrzgk43t",
+    "constraints":"{\"filters\":[{\"internalName\":\"product\",\"displayName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\",\"fieldType\":\"STRING\",\"isExtracted\":false,\"hidden\":false}],\"searchTerms\":\"server\"}",
+    "info":null
+  }, {
+    "displayName":"nutanix_prism_gateway_severity",
+    "preContext":"prism_gateway: ",
+    "postContext":"  \\d\\d\\d\\d-\\d\\d-\\d\\d ",
+    "regexValue":"\\w+",
+    "internalName":"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz",
+    "constraints":"{\"filters\":[{\"internalName\":\"product\",\"displayName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\",\"fieldType\":\"STRING\",\"isExtracted\":false,\"hidden\":false}],\"searchTerms\":\"prism_gateway\"}",
+    "info":null
+  }, {
+    "displayName":"nutanix_stargate_disk_number",
+    "preContext":" Disk ",
+    "postContext":"",
+    "regexValue":"-?\\d+",
+    "internalName":"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f643umfzgoylumvpwi2ltnnpw45lnmjsxe000",
+    "constraints":"{\"filters\":[{\"internalName\":\"product\",\"displayName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\",\"fieldType\":\"STRING\",\"isExtracted\":false,\"hidden\":false}],\"searchTerms\":\"disk\"}",
+    "info":null
+  }, {
+    "displayName":"nutanix_stargate_rpc_connection_remote_ip_address",
+    "preContext":"connection to ",
+    "postContext":":\\d+",
+    "regexValue":"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}",
+    "internalName":"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f643umfzgoylumvpxe4ddl5rw63tomvrxi2lpnzpxezlnn52gkx3jobpwczdeojsxg4y0",
+    "constraints":"{\"filters\":[{\"internalName\":\"product\",\"displayName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\",\"fieldType\":\"STRING\",\"isExtracted\":false,\"hidden\":false}],\"searchTerms\":\"connection\"}",
+    "info":null
+  }, {
+    "displayName":"nutanix_zookeeper_event_severity",
+    "preContext":"\\d\\d:\\d\\d:\\d\\d,\\d\\d\\d - ",
+    "postContext":"\\ ? \\[",
+    "regexValue":"\\w+",
+    "internalName":"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000",
+    "constraints":"{\"filters\":[{\"internalName\":\"product\",\"displayName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\",\"fieldType\":\"STRING\",\"isExtracted\":false,\"hidden\":false}]}",
+    "info":null
+  }, {
+    "displayName":"nutanix_zookeeper_remote_ip_address",
+    "preContext":"client /",
+    "postContext":":.*$",
+    "regexValue":"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}",
+    "internalName":"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf64tfnvxxizk7nfyf6ylemrzgk43t",
+    "constraints":"{\"filters\":[{\"internalName\":\"product\",\"displayName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\",\"fieldType\":\"STRING\",\"isExtracted\":false,\"hidden\":false}],\"searchTerms\":\"client\"}",
+    "info":null
+  } ],
+  "queries":[ ],
+  "alerts":[ {
+    "name":"Nutanix: Node Restarted Alert",
+    "info":"<span>This alert is raised when the number of node restarts is greater than the threshold. These restarts may be planned, or may be caused by a serious issue. This Nutanix KB article provides support for uncovering the cause for a reboot</span><span>(requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#page/kbs/details?targetId=kA0600000008Z5zCAE\">https://portal.nutanix.com/#page/kbs/details?targetId=kA0600000008Z5zCAE</a><span><span></span></span></span>",
+    "alertType":"RATE_BASED",
+    "chartQuery":"{\"query\":\"has restarted\",\"startTimeMillis\":1471625214495,\"endTimeMillis\":1471628814494,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"cassandra\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+    "messageQuery":null,
+    "hitCount":5.0,
+    "hitOperator":"GREATER_THAN",
+    "searchPeriod":21600000,
+    "searchInterval":3600000
+  }, {
+    "name":"Nutanix: No Usable Curator Disks Available Alert",
+    "info":"This alert is triggered when the number of log events with the message \"<span>Fail fast as no usable Curator disks are available\" is greater than the threshold. This message indicates that Nutanix Curator does not have any usable disks available to it. This can be caused by an unexpected reboot or disks simply being unavailable. To diagnose, log in to the Prism interface and check the status of the cluster and its disks. For more detailed steps, visit the Nutanix support article on disk troubleshooting here</span><span>(requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#page/kbs/details?targetId=kA0600000008USrCAM\">https://portal.nutanix.com/#page/kbs/details?targetId=kA0600000008USrCAM</a></span>",
+    "alertType":"RATE_BASED",
+    "chartQuery":"{\"query\":\"Fail fast as no usable Curator disks are available\",\"startTimeMillis\":1471608000000,\"endTimeMillis\":1471629599999,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+    "messageQuery":null,
+    "hitCount":5.0,
+    "hitOperator":"GREATER_THAN",
+    "searchPeriod":21600000,
+    "searchInterval":3600000
+  }, {
+    "name":"Nutanix: Killing Zookeeper Alert",
+    "info":"This alert is triggered when a log event indicating that Zookeeper is being killed. This is a serious problem given how much Zookeeper does, and can be caused by an expected or unexpected shutdown. Nutanix does not have a guide for troubleshooting this issue, but this general article explaining PSU redundancy may be relevant (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#page/kbs/details?targetId=kA0600000008fz4CAA\">https://portal.nutanix.com/#page/kbs/details?targetId=kA0600000008fz4CAA</a>",
+    "alertType":"RATE_BASED",
+    "chartQuery":"{\"query\":\"\\\"Killing Zookeeper\\\"\",\"startTimeMillis\":1471290951857,\"endTimeMillis\":1471895752563,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+    "messageQuery":null,
+    "hitCount":1.0,
+    "hitOperator":"GREATER_THAN",
+    "searchPeriod":21600000,
+    "searchInterval":3600000
+  }, {
+    "name":"Nutanix: Syncing Commitlog to Disk Duration Alert",
+    "info":"This alert is triggered when the number of log events warning that syncing commitlog to disk is taking longer than the expected time is greater than the threshold. These log messages will also provide the recent sync latency, which will show how high the latency was recently. Increased latency can be caused by many things, and this Nutanix support article explains how to interpret latency, what could be causing it, and how to investigate increased latency (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#page/kbs/details?targetId=kA03200000098bBCAQ\">https://portal.nutanix.com/#page/kbs/details?targetId=kA03200000098bBCAQ</a>",
+    "alertType":"RATE_BASED",
+    "chartQuery":"{\"query\":\"Syncing commitlog to disk took longer than\",\"startTimeMillis\":1471625400000,\"endTimeMillis\":1471625999999,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"cassandra-system\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+    "messageQuery":null,
+    "hitCount":2.0,
+    "hitOperator":"GREATER_THAN",
+    "searchPeriod":21600000,
+    "searchInterval":3600000
+  }, {
+    "name":"Nutanix: Network is Unreachable Alert",
+    "info":"This alert is triggered when the number of log events containing the message \"Network is unreachable\" is greater than the threshold. This message can be caused by a network cable being unplugged, but could also be caused by a network configuration error which prevents the network from being accessed. Because this is such a broad issue, the best source of support is this Nutanix article about vSphere best practices (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#page/kbs/details?targetId=kA03200000098oKCAQ\">https://portal.nutanix.com/#page/kbs/details?targetId=kA03200000098oKCAQ</a>",
+    "alertType":"RATE_BASED",
+    "chartQuery":"{\"query\":\"Network is unreachable\",\"startTimeMillis\":1471270732400,\"endTimeMillis\":1471875532741,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+    "messageQuery":null,
+    "hitCount":1.0,
+    "hitOperator":"GREATER_THAN",
+    "searchPeriod":21600000,
+    "searchInterval":3600000
+  } ],
+  "dashboardSections":[ {
+    "views":[ {
+      "name":"Nutanix Events Overview",
+      "constraints":[ {
+        "internalName":"hostname",
+        "operator":"CONTAINS"
+      } ],
+      "rows":[ {
+        "widgets":[ {
+          "name":"Count of Nutanix Events Over Time",
+          "info":"This widget displays the total number of Nutanix events reported over time. Unless filtering by hostname, the count includes all events from all Nutanix servers that are forwarding logs.<br><br>For documentation and support, see the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs<br></a>",
+          "gridWidth":"1",
+          "chartType":"area",
+          "chartOptions":"{\"logaxis\":false,\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1470830587985,\"endTimeMillis\":1470830889089,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+          "messageQuery":null
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of Nutanix Events Over Time, Grouped by Appname",
+          "info":"This widget displays the total number of Nutanix events reported over time, grouped by appname. Appname represents the software source of the log event. For example: Prism, Stargate, Cassandra, etc.<br><br>For Nutanix documentation and support, visit the support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":"{\"logaxis\":false,\"legend\":true,\"stacking\":\"normal\",\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1470832117077,\"endTimeMillis\":1470832417076,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"EXISTS\"}],\"supplementalConstraints\":[],\"groupByFields\":[{\"displayName\":\"appname\",\"internalName\":\"appname\",\"displayNamespace\":null,\"numericGroupByType\":\"EACH_VALUE\",\"numericGroupByValue\":null}],\"extractedFields\":[]}",
+          "messageQuery":null
+        }, {
+          "name":"Count of Nutanix Events Over Time, Grouped by Hostname",
+          "info":"<span>This\n widget displays the total number of Nutanix events reported over time, \ngrouped by hostname. In this context hostname refers to the CVM which sent the log event. The benefit of this widget is viewing what percentage of all logs some host is responsible for over time.<br><br>For Nutanix documentation and support, visit the support portal here</span><span>(requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a></span><br>",
+          "chartType":"column",
+          "chartOptions":"{\"logaxis\":false,\"legend\":true,\"stacking\":\"normal\",\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1470829230269,\"endTimeMillis\":1470832830758,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"hostname\",\"operator\":\"EXISTS\"}],\"supplementalConstraints\":[],\"groupByFields\":[{\"displayName\":\"hostname\",\"internalName\":\"hostname\",\"displayNamespace\":null,\"numericGroupByType\":\"EACH_VALUE\",\"numericGroupByValue\":null}],\"extractedFields\":[]}",
+          "messageQuery":null
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of Nutanix Exception Events Over Time",
+          "info":"<span>This\n widget displays the total number of Nutanix exception events reported over time. This means the word \"Exception\" appears in the log message.<br><br>For Nutanix documentation and support, visit the support portal here</span><span>(requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a></span><br>",
+          "chartType":"area",
+          "chartOptions":"{\"logaxis\":false,\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"Exception\",\"startTimeMillis\":1471268770075,\"endTimeMillis\":1471272370074,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+          "messageQuery":null
+        }, {
+          "name":"Nutanix Events Queries",
+          "info":"Use queries from this list to filter all Nutanix events into useful subsets.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a><span></span>",
+          "chartType":null,
+          "chartOptions":null,
+          "widgetType":"list",
+          "listType":"query",
+          "listData":[ {
+            "name":"Events with stacktraces",
+            "chartQuery":"{\"query\":\".java\",\"startTimeMillis\":1471277779655,\"endTimeMillis\":1471278080357,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":null,
+            "info":"View log messages that include parts of stacktraces caused by exceptions<br>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of error events over time",
+            "chartQuery":"{\"query\":\"ERROR\",\"startTimeMillis\":1470674434214,\"endTimeMillis\":1471279234562,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":null,
+            "info":"View all Nutanix events which contain the word \"Error\"<br>",
+            "options":"{\"chartTypeName\":\"area\",\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of disk events over time",
+            "chartQuery":"{\"query\":\"disk\",\"startTimeMillis\":1470678993337,\"endTimeMillis\":1471283795703,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":null,
+            "info":"View all Nutanix log events containing the word 'disk'<br>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          } ]
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Recent Nutanix Events",
+          "info":"This widget displays the most recent Nutanix events reported over \ntime. Unless filtering by hostname, the count includes all events from \nall Nutanix servers that are forwarding logs.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "gridWidth":"1",
+          "chartType":null,
+          "chartOptions":null,
+          "widgetType":"fieldTable",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1471883740509,\"endTimeMillis\":1471970141714,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"FIELD_TABLE\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+          "messageQuery":"",
+          "columns":[ {
+            "internalName":"__li_msg_col",
+            "displayName":"__li_msg_col",
+            "displayNamespace":null
+          }, {
+            "internalName":"__li_source_path",
+            "displayName":"source",
+            "displayNamespace":null
+          }, {
+            "internalName":"hostname",
+            "displayName":"hostname",
+            "displayNamespace":null
+          }, {
+            "internalName":"appname",
+            "displayName":"appname",
+            "displayNamespace":null
+          } ]
+        } ]
+      } ]
+    }, {
+      "name":"Nutanix Cassandra Events",
+      "constraints":[ {
+        "internalName":"hostname",
+        "operator":"CONTAINS"
+      } ],
+      "rows":[ {
+        "widgets":[ {
+          "name":"Count of Nutanix Cassandra Events Over Time",
+          "info":"<span>This\n widget displays the total number of Nutanix Cassandr events reported over time.<br><br>For Nutanix documentation and support, visit the support portal here</span><span></span><span>(requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a></span><br>",
+          "gridWidth":"1",
+          "chartType":"area",
+          "chartOptions":"{\"logaxis\":false,\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1471968167780,\"endTimeMillis\":1471971768239,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"cassandra,cassandra-system,cassandra_monitor,cassandra-dynamic_ring_changer\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of Nutanix Cassandra Events Over Time, Grouped by Hostname",
+          "info":"<span>This\n widget displays the total number of Nutanix Cassandra events reported over time, \ngrouped by hostname.<br><br>For Nutanix documentation and support, visit the support portal here</span><span></span><span>(requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a></span><br>",
+          "chartType":"column",
+          "chartOptions":"{\"logaxis\":false,\"legend\":true,\"stacking\":\"normal\",\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1471968208783,\"endTimeMillis\":1471971810379,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"cassandra,cassandra-system,cassandra_monitor,cassandra-dynamic_ring_changer\"},{\"internalName\":\"hostname\",\"operator\":\"EXISTS\"}],\"supplementalConstraints\":[],\"groupByFields\":[{\"displayName\":\"hostname\",\"internalName\":\"hostname\",\"displayNamespace\":null,\"numericGroupByType\":\"EACH_VALUE\",\"numericGroupByValue\":null}],\"extractedFields\":[]}",
+          "messageQuery":""
+        }, {
+          "name":"Count of Nutanix Cassandra Events Over Time, Grouped by Severity",
+          "info":"This widget shows all Nutanix events sent by Cassandra over time, grouped by event severity.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":"column",
+          "chartOptions":"{\"logaxis\":false,\"legend\":true,\"stacking\":\"normal\",\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1471284939789,\"endTimeMillis\":1471288540718,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"EXISTS\"}],\"supplementalConstraints\":[],\"groupByFields\":[{\"displayName\":\"nutanix_cassandra_event_severity\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"displayNamespace\":\"Nutanix - Clusters\",\"numericGroupByType\":\"EACH_VALUE\",\"numericGroupByValue\":null}],\"extractedFields\":[{\"displayName\":\"nutanix_cassandra_event_severity\",\"preContext\":\"cassandra: \",\"postContext\":\" \\\\d\\\\d\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"cassandra\\\"}\"}]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of Nutanix Cassandra Error Events",
+          "info":"This widget displays the number of Nutanix Cassandra events of severity Error over the selected time range.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":"{}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"error\",\"startTimeMillis\":1465257751905,\"endTimeMillis\":1472147575700,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":false,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"CONTAINS\",\"value\":\"error\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_cassandra_event_severity\",\"preContext\":\"cassandra: \",\"postContext\":\" \\\\d\\\\d\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"cassandra\\\"}\"}]}",
+          "messageQuery":""
+        }, {
+          "name":"Count of Nutanix Cassandra Warning Events",
+          "info":"This widget displays the number of Nutanix Cassandra events of severity Warning over the selected time range.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":"{}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"warn\",\"startTimeMillis\":1471542839284,\"endTimeMillis\":1472147640516,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":false,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"CONTAINS\",\"value\":\"warn\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_cassandra_event_severity\",\"preContext\":\"cassandra: \",\"postContext\":\" \\\\d\\\\d\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"cassandra\\\"}\"}]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Nutanix Cassandra Events Queries",
+          "info":"Use these queries to filter<span>events sent by Cassandra into useful subsets.<br><br>For documentation and support visit the Nutanix support portal here</span><span>(requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a></span>",
+          "gridWidth":"1/2",
+          "chartType":null,
+          "chartOptions":null,
+          "widgetType":"list",
+          "listType":"query",
+          "listData":[ {
+            "name":"Count of Info events over time",
+            "chartQuery":"{\"query\":\"info\",\"startTimeMillis\":1472144080608,\"endTimeMillis\":1472147681039,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"CONTAINS\",\"value\":\"INFO\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_cassandra_event_severity\",\"preContext\":\"cassandra: \",\"postContext\":\" \\\\d\\\\d\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"cassandra\\\"}\"}]}",
+            "messageQuery":"",
+            "info":"View all Cassandra events of severity Info<br>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of Warning events over time",
+            "chartQuery":"{\"query\":\"warn\",\"startTimeMillis\":1472144095553,\"endTimeMillis\":1472147696228,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"CONTAINS\",\"value\":\"WARN\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_cassandra_event_severity\",\"preContext\":\"cassandra: \",\"postContext\":\" \\\\d\\\\d\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f6y3bonzwc3teojqv6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"cassandra\\\"}\"}]}",
+            "messageQuery":"",
+            "info":"View all Cassandra events of severity Warning<br>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of SSTableReader events over time",
+            "chartQuery":"{\"query\":\"sstablereader\",\"startTimeMillis\":1471267423078,\"endTimeMillis\":1471353823300,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"cassandra\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":"",
+            "info":"View all Cassandra events involving SSTableReader<br>",
+            "options":"{\"chartTypeName\":\"area\",\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of database file events over time",
+            "chartQuery":"{\"query\":\"\\\".db\\\"\",\"startTimeMillis\":1471267726357,\"endTimeMillis\":1471354126356,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"cassandra\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":"",
+            "info":"View all Cassandra events that involved a *.db file<br>",
+            "options":"{\"chartTypeName\":\"area\",\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          } ]
+        } ]
+      } ]
+    }, {
+      "name":"Nutanix Prism Events",
+      "constraints":[ {
+        "internalName":"hostname",
+        "operator":"CONTAINS"
+      } ],
+      "rows":[ {
+        "widgets":[ {
+          "name":"Count of Nutanix Prism Events Over Time",
+          "info":"This widget displays the total number of Nutanix Prism events reported over \ntime. Unless filtering by hostname, the count includes all Prism events from \nall Nutanix servers that are forwarding logs.<br><br>For documentation and support, see the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "gridWidth":"1",
+          "chartType":"area",
+          "chartOptions":"{\"logaxis\":false,\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1470748439702,\"endTimeMillis\":1470770040841,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"prism,prism_gateway\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of Nutanix Prism Events Over Time, Grouped by Severity",
+          "info":"This widget displays the total number of Nutanix Prism events reported over \ntime, grouped by severity. The benefit of this is being able to quickly see how many events are of each severity.<br><br>For documentation and support, see the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":"column",
+          "chartOptions":"{\"logaxis\":false,\"legend\":true,\"stacking\":\"normal\",\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1471287785812,\"endTimeMillis\":1471291385811,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"operator\":\"EXISTS\"}],\"supplementalConstraints\":[],\"groupByFields\":[{\"displayName\":\"nutanix_prism_gateway_severity\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"displayNamespace\":\"Nutanix - Clusters\",\"numericGroupByType\":\"EACH_VALUE\",\"numericGroupByValue\":null}],\"extractedFields\":[{\"displayName\":\"nutanix_prism_gateway_severity\",\"preContext\":\"prism_gateway: \",\"postContext\":\"  \\\\d\\\\d\\\\d\\\\d-\\\\d\\\\d-\\\\d\\\\d \",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"prism_gateway\\\"}\"}]}",
+          "messageQuery":""
+        }, {
+          "name":"Count of Nutanix Prism Cluster Events Over Time",
+          "info":"This widget displays the total number of cluster events over time. This is defined as a log event which contains the word \"cluster\".<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":"area",
+          "chartOptions":"{\"logaxis\":false,\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"cluster\",\"startTimeMillis\":1471607323491,\"endTimeMillis\":1471610923490,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"ASC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"prism,prism_gateway\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of Nutanix Prism Error Events",
+          "info":"This widget displays the number of Nutanix Prism events of severity Error over the selected time range.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":"{}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"error\",\"startTimeMillis\":1472144169830,\"endTimeMillis\":1472147771921,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":false,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"operator\":\"CONTAINS\",\"value\":\"error\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_prism_gateway_severity\",\"preContext\":\"prism_gateway: \",\"postContext\":\"  \\\\d\\\\d\\\\d\\\\d-\\\\d\\\\d-\\\\d\\\\d \",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"prism_gateway\\\"}\"}]}",
+          "messageQuery":""
+        }, {
+          "name":"Count of Nutanix Prism Warning Events",
+          "info":"This widget displays the number of Nutanix Prism events of severity Warning over the selected time range.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":"{}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"warn\",\"startTimeMillis\":1472144199114,\"endTimeMillis\":1472147799268,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":false,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"operator\":\"CONTAINS\",\"value\":\"warn\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_prism_gateway_severity\",\"preContext\":\"prism_gateway: \",\"postContext\":\"  \\\\d\\\\d\\\\d\\\\d-\\\\d\\\\d-\\\\d\\\\d \",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"prism_gateway\\\"}\"}]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Nutanix Prism Events queries",
+          "info":"This widget provides a set of queries that provide useful filtering of Prism events. <br><br>For documentation and support, see the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a><br>",
+          "gridWidth":"1/2",
+          "chartType":null,
+          "chartOptions":null,
+          "widgetType":"list",
+          "listType":"query",
+          "listData":[ {
+            "name":"Count of Prism Gateway Info events over time",
+            "chartQuery":"{\"query\":\"Info\",\"startTimeMillis\":1472144218837,\"endTimeMillis\":1472147819682,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"operator\":\"CONTAINS\",\"value\":\"INFO\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_prism_gateway_severity\",\"preContext\":\"prism_gateway: \",\"postContext\":\"  \\\\d\\\\d\\\\d\\\\d-\\\\d\\\\d-\\\\d\\\\d \",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"prism_gateway\\\"}\"}]}",
+            "messageQuery":"",
+            "info":"View all Nutanix Prism events of severity Info<br>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of Prism Gateway Warning events over time",
+            "chartQuery":"{\"query\":\"Warn\",\"startTimeMillis\":1472144231949,\"endTimeMillis\":1472147833819,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"operator\":\"CONTAINS\",\"value\":\"WARN\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_prism_gateway_severity\",\"preContext\":\"prism_gateway: \",\"postContext\":\"  \\\\d\\\\d\\\\d\\\\d-\\\\d\\\\d-\\\\d\\\\d \",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f64dsnfzw2x3hmf2gk53bpfpxgzlwmvzgs5dz\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"prism_gateway\\\"}\"}]}",
+            "messageQuery":"",
+            "info":"View all Prism Gateway events of severity Warning over time.<br>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of Zookeeper events over time",
+            "chartQuery":"{\"query\":\"zookeeper*\",\"startTimeMillis\":1472144255676,\"endTimeMillis\":1472147856070,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"prism,prism_gateway\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":"",
+            "info":"View all Prism events involving Zookeeper<br>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          } ]
+        } ]
+      } ]
+    }, {
+      "name":"Nutanix Stargate Events",
+      "constraints":[ {
+        "internalName":"hostname",
+        "operator":"CONTAINS"
+      } ],
+      "rows":[ {
+        "widgets":[ {
+          "name":"Count of Nutanix Stargate Events Over Time",
+          "info":"This widget displays the number of events reported by Nutanix Stargate over time.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "gridWidth":"1",
+          "chartType":"area",
+          "chartOptions":"{\"logaxis\":false,\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1470767099506,\"endTimeMillis\":1470767399609,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"stargate\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of HTTP Connection Error Events Over Time",
+          "info":"This widget displays the number of HTTP connection errors reported by Nutanix Stargate over time.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":"area",
+          "chartOptions":"{\"logaxis\":false,\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"Http connection error\",\"startTimeMillis\":1472144273675,\"endTimeMillis\":1472147874106,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"stargate\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+          "messageQuery":""
+        }, {
+          "name":"Count of Nutanix Stargate RPC Connection Events Over Time, Grouped by IP Address",
+          "info":"This widget displays all RPC connection events reported by Nutanix Stargate over time, grouped by remote IP address.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":"column",
+          "chartOptions":"{\"logaxis\":false,\"legend\":true,\"stacking\":\"normal\",\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"RPC connection\",\"startTimeMillis\":1472144293707,\"endTimeMillis\":1472147895019,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"stargate\"},{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f643umfzgoylumvpxe4ddl5rw63tomvrxi2lpnzpxezlnn52gkx3jobpwczdeojsxg4y0\",\"operator\":\"EXISTS\"}],\"supplementalConstraints\":[],\"groupByFields\":[{\"displayName\":\"nutanix_stargate_rpc_connection_remote_ip_address\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f643umfzgoylumvpxe4ddl5rw63tomvrxi2lpnzpxezlnn52gkx3jobpwczdeojsxg4y0\",\"displayNamespace\":\"Nutanix - Clusters\",\"numericGroupByType\":\"EACH_VALUE\",\"numericGroupByValue\":null}],\"extractedFields\":[{\"displayName\":\"nutanix_stargate_rpc_connection_remote_ip_address\",\"preContext\":\"connection to \",\"postContext\":\":\\\\d+\",\"regexValue\":\"\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f643umfzgoylumvpxe4ddl5rw63tomvrxi2lpnzpxezlnn52gkx3jobpwczdeojsxg4y0\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"connection\\\"}\"}]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of Stargate Events Over Time, Grouped by Disk Number",
+          "info":"This widget displays all Nutanix Stargate events reported over time, grouped by disk number.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":"{\"logaxis\":false,\"legend\":true,\"stacking\":\"normal\",\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"Disk\",\"startTimeMillis\":1472144344166,\"endTimeMillis\":1472147944840,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f643umfzgoylumvpwi2ltnnpw45lnmjsxe000\",\"operator\":\"EXISTS\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"stargate\"}],\"supplementalConstraints\":[],\"groupByFields\":[{\"displayName\":\"nutanix_stargate_disk_number\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f643umfzgoylumvpwi2ltnnpw45lnmjsxe000\",\"displayNamespace\":\"Nutanix - Clusters\",\"numericGroupByType\":\"EACH_VALUE\",\"numericGroupByValue\":null}],\"extractedFields\":[{\"displayName\":\"nutanix_stargate_disk_number\",\"preContext\":\" Disk \",\"postContext\":\"\",\"regexValue\":\"-?\\\\d+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f643umfzgoylumvpwi2ltnnpw45lnmjsxe000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"disk\\\"}\"}]}",
+          "messageQuery":""
+        }, {
+          "name":"Nutanix Stargate Events Queries",
+          "info":"Use these queries to quickly view a specific subset of Nutanix Stargate logs.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":null,
+          "widgetType":"list",
+          "listType":"query",
+          "listData":[ {
+            "name":"Count of disk events over time",
+            "chartQuery":"{\"query\":\"disk\",\"startTimeMillis\":1471433586446,\"endTimeMillis\":1471437187312,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"stargate\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":"",
+            "info":"View all Nutanix Stargate events which contain the word \"disk\"<br>",
+            "options":"{\"chartTypeName\":\"area\",\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of RPC connection events over time",
+            "chartQuery":"{\"query\":\"\\\"RPC Connection\\\"\",\"startTimeMillis\":1471437751168,\"endTimeMillis\":1471441351657,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"stargate\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":"",
+            "info":"View all Nutanix Stargate events which involve RPC connections<br>",
+            "options":"{\"chartTypeName\":\"area\",\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of Oplog events over time",
+            "chartQuery":"{\"query\":\"oplog\",\"startTimeMillis\":1471437909480,\"endTimeMillis\":1471441510119,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"stargate\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":"",
+            "info":"View all Nutanix Stargate events involving Oplog<br>",
+            "options":"{\"chartTypeName\":\"area\",\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of TCP server events over time",
+            "chartQuery":"{\"query\":\"tcp_server\",\"startTimeMillis\":1471438485555,\"endTimeMillis\":1471442086386,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"stargate\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+            "messageQuery":"",
+            "info":"View all Nutanix Stargate events involving TCP server<br>",
+            "options":"{\"chartTypeName\":\"area\",\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          } ]
+        } ]
+      } ]
+    }, {
+      "name":"Nutanix Zookeeper Events",
+      "constraints":[ {
+        "internalName":"hostname",
+        "operator":"CONTAINS"
+      } ],
+      "rows":[ {
+        "widgets":[ {
+          "name":"Count of Nutanix Zookeeper Events Over Time",
+          "info":"<span>This\n widget displays the total number of Nutanix Zookeeper events reported over time.<br><br>For Nutanix documentation and support, visit the support portal here</span><span>(requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a></span><br>",
+          "gridWidth":"1",
+          "chartType":"area",
+          "chartOptions":"{\"logaxis\":false,\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1470767007758,\"endTimeMillis\":1470767308041,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"product\",\"operator\":\"CONTAINS\",\"value\":\"nutanix\"},{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"zookeeper,zookeeper_monitor\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of Nutanix Zookeeper Events Over Time, Grouped by Severity",
+          "info":"<span>This\n widget displays the total number of Nutanix Zookeeper events reported over time, \ngrouped by event level.<br><br>For Nutanix documentation and support, visit the support portal here</span><span>(requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a></span><br>",
+          "chartType":null,
+          "chartOptions":"{\"logaxis\":false,\"legend\":true,\"stacking\":\"normal\",\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1471272261466,\"endTimeMillis\":1471272561465,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"EXISTS\"}],\"supplementalConstraints\":[],\"groupByFields\":[{\"displayName\":\"nutanix_zookeeper_event_severity\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"displayNamespace\":\"Nutanix - Clusters\",\"numericGroupByType\":\"EACH_VALUE\",\"numericGroupByValue\":null}],\"extractedFields\":[{\"displayName\":\"nutanix_zookeeper_event_severity\",\"preContext\":\"\\\\d\\\\d:\\\\d\\\\d:\\\\d\\\\d,\\\\d\\\\d\\\\d - \",\"postContext\":\"\\\\ ? \\\\[\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}]}\"}]}",
+          "messageQuery":""
+        }, {
+          "name":"Count of Nutanix Zookeeper Events Over Time, Grouped by IP Address",
+          "info":"This widget displays all Nutanix Zookeeper events which involve a remote IP address, grouped by remote IP address.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":"{\"logaxis\":false,\"legend\":true,\"stacking\":\"normal\",\"spline\":false}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1471545075486,\"endTimeMillis\":1471545377486,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"zookeeper,zookeeper_monitor\"},{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf64tfnvxxizk7nfyf6ylemrzgk43t\",\"operator\":\"EXISTS\"}],\"supplementalConstraints\":[],\"groupByFields\":[{\"displayName\":\"nutanix_zookeeper_remote_ip_address\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf64tfnvxxizk7nfyf6ylemrzgk43t\",\"displayNamespace\":\"Nutanix - Clusters\",\"numericGroupByType\":\"EACH_VALUE\",\"numericGroupByValue\":null}],\"extractedFields\":[{\"displayName\":\"nutanix_zookeeper_remote_ip_address\",\"preContext\":\"client /\",\"postContext\":\":.*$\",\"regexValue\":\"\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf64tfnvxxizk7nfyf6ylemrzgk43t\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}],\\\"searchTerms\\\":\\\"client\\\"}\"}]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Count of Nutanix Zookeeper Error Events",
+          "info":"This widget displays the number of Nutanix Zookeeper events of severity Error over the selected time range.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":"{}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"Error\",\"startTimeMillis\":1472144382439,\"endTimeMillis\":1472147983080,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":false,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"CONTAINS\",\"value\":\"error\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_zookeeper_event_severity\",\"preContext\":\"\\\\d\\\\d:\\\\d\\\\d:\\\\d\\\\d,\\\\d\\\\d\\\\d - \",\"postContext\":\"\\\\ ? \\\\[\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}]}\"}]}",
+          "messageQuery":""
+        }, {
+          "name":"Count of Nutanix Zookeeper Warning Events",
+          "info":"This widget displays the number of Nutanix Zookeeper events of severity Warning over the selected time range.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "chartType":null,
+          "chartOptions":"{}",
+          "widgetType":"chart",
+          "chartQuery":"{\"query\":\"warn\",\"startTimeMillis\":1472144397897,\"endTimeMillis\":1472147997896,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":false,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"CONTAINS\",\"value\":\"warn\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_zookeeper_event_severity\",\"preContext\":\"\\\\d\\\\d:\\\\d\\\\d:\\\\d\\\\d,\\\\d\\\\d\\\\d - \",\"postContext\":\"\\\\ ? \\\\[\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}]}\"}]}",
+          "messageQuery":""
+        } ]
+      }, {
+        "widgets":[ {
+          "name":"Nutanix Zookeeper Events Queries",
+          "info":"Use queries from this widget to quickly view useful subsets of Nutanix Zookeeper events.<br><br>For documentation and support, visit the Nutanix support portal here (requires a my.nutanix.com account): <a href=\"https://portal.nutanix.com/#/page/kbs\">https://portal.nutanix.com/#/page/kbs</a>",
+          "gridWidth":"1/2",
+          "chartType":null,
+          "chartOptions":null,
+          "widgetType":"list",
+          "listType":"query",
+          "listData":[ {
+            "name":"Count of severity Info events over time",
+            "chartQuery":"{\"query\":\"info\",\"startTimeMillis\":1472144410218,\"endTimeMillis\":1472148011343,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"CONTAINS\",\"value\":\"info\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_zookeeper_event_severity\",\"preContext\":\"\\\\d\\\\d:\\\\d\\\\d:\\\\d\\\\d,\\\\d\\\\d\\\\d - \",\"postContext\":\"\\\\ ? \\\\[\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}]}\"}]}",
+            "messageQuery":"",
+            "info":"View all Nutanix Zookeeper events of severity Info<br>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of severity Warning events over time",
+            "chartQuery":"{\"query\":\"warn\",\"startTimeMillis\":1472144427813,\"endTimeMillis\":1472148028343,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"CONTAINS\",\"value\":\"warn\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_zookeeper_event_severity\",\"preContext\":\"\\\\d\\\\d:\\\\d\\\\d:\\\\d\\\\d,\\\\d\\\\d\\\\d - \",\"postContext\":\"\\\\ ? \\\\[\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}]}\"}]}",
+            "messageQuery":"",
+            "info":"View all Nutanix Zookeeper events of severity Warning<br>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          }, {
+            "name":"Count of severity Error events over time",
+            "chartQuery":"{\"query\":\"error\",\"startTimeMillis\":1472144441582,\"endTimeMillis\":1472148042141,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"operator\":\"CONTAINS\",\"value\":\"error\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"extractedFields\":[{\"displayName\":\"nutanix_zookeeper_event_severity\",\"preContext\":\"\\\\d\\\\d:\\\\d\\\\d:\\\\d\\\\d,\\\\d\\\\d\\\\d - \",\"postContext\":\"\\\\ ? \\\\[\",\"regexValue\":\"\\\\w+\",\"internalName\":\"ibademc7mnxw2ltoov2gc3tjpaxgg3dvon2gk4ttnz2xiylonf4f66tpn5vwkzlqmvzf6zlwmvxhix3tmv3gk4tjor4q0000\",\"constraints\":\"{\\\"filters\\\":[{\\\"internalName\\\":\\\"product\\\",\\\"displayName\\\":\\\"product\\\",\\\"operator\\\":\\\"CONTAINS\\\",\\\"value\\\":\\\"nutanix\\\",\\\"fieldType\\\":\\\"STRING\\\",\\\"isExtracted\\\":false,\\\"hidden\\\":false}]}\"}]}",
+            "messageQuery":"",
+            "info":"View all Nutanix Zookeeper events of severity Error<span><br></span>",
+            "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"spline\\\":false}\"}"
+          } ]
+        } ]
+      } ]
+    } ],
+    "header":""
+  } ],
+  "agentClasses":[],
+  "author":"VMware, Inc",
+  "url":"www.nutanix.com",
+  "contentVersion":"1.2",
+  "info":"<span>Nutanix clusters include the Prism management interface,\nwhich leverages services like Cassandra, Zookeeper, and Stargate to provide a\ncomplete overview of its cluster. Prism and these other services maintain logs\nwhich can be used to monitor the cluster.</span><br>\n\n<span>&nbsp;</span><br>\n\n<span>The Nutanix Clusters Content Pack by VMware collects\nand analyzes logs forwarded by Nutanix clusters, and provides visualization and\nin-depth analysis of log events. Specifically, the content pack receives log\nevents from Cassandra, Cerebro, Curator, Genesis, Prism, Stargate, and\nZookeeper modules, allowing all of those logs to be analyzed in Log Insight.\nSome example use cases include:</span><br>\n\n<span>• Be alerted of increased disk latency</span><br>\n\n<span>• Quickly see how many log events are of warning or\nerror-level</span><br>\n\n<span>• Be alerted of network connectivity issues</span><br>\n\n<span>• View the number of HTTP connection errors over time</span><br>\n\n<span>• Identify if certain disks are involved in a large\npercentage of log events</span><br>\n\n<span>• Be alerted of cluster reboots</span><br>\n\n<span>&nbsp;</span><br>\n\n<span>Minimum requirements:</span><br>\n\n<span>Nutanix cluster running NOS 4.6+</span><br>\n\n<span>Log Insight 3.3+</span><br>",
+  "instructions":"1<span>. Log Insight Configuration</span><br>\n\n<span>&nbsp;</span><br>\n\n<span>1.a Multi-VIP Setup</span><br>\n\n<span><span>Using the Log Insight interface, configure a VIP to filter\nNutanix logs and append the appropriate context keyword.</span><br>\n\n<span>• Navigate to Administration -&gt; Cluster.</span><br>\n\n<span>• Select <span>“</span>New Virtual IP Address.<span>”</span></span><br>\n\n<span>• Enter the desired IP address (located on the same subnet\nas the Log Insight node).</span><br>\n\n<span>• Add the tag <span>“</span>product=nutanix<span>”</span><span></span>to the virtual IP address.</span><br>\n\n<span><span>&nbsp;</span></span><br>\n\n<span><span>Now, logs forwarded\nto that virtual IP address will be tagged with “product=nutanix”, and fed into\nLog Insight for analysis.</span></span><br>\n\n<span>&nbsp;</span><br>\n\n<span><span>&nbsp;</span></span><br>\n\n<span><span>2. Nutanix Cluster\nConfiguration</span></span><br>\n\n<span>&nbsp;</span><br>\n\n<span>• SSH into one of the cluster's\nCVMs.</span><br>\n\n<span>• Enter the Nutanix CLI by\nentering 'ncli'</span><br>\n\n<span>• Disable rsyslog by entering 'rsyslog-config\nset-status enable=false'</span><br>\n\n<span>• Add the configured VIP as a\nremote syslog server by entering:</span><br>\n\n<span><span>&nbsp;</span>• rsyslog-config add-server name=your_vip_name ip-address=your_vip_ip'\nport=514 protocol=UDP</span><br>\n\n<span>• Set each module to forward logs\nto the VIP by entering:</span><br>\n\n<span><span>&nbsp;</span>• 'rsyslog-config add-module server-name=your_vip_name\nmodule-name=cassandra level=INFO include-monitor-logs=true'</span><br>\n\n<span><span>&nbsp;</span>• Repeat for cerebro, curator, genesis, prism, stargate, zookeeper.\nOrder does not matter, these are just alphabetical.</span><br>\n\n<span>• Enable rsyslog by entering\n'rsyslog-config set-status enable=true'</span><br>",
+  "icon":"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"
+}
